@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kaushik Shinde - Portfolio</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            body {
+                display: flex;
+                background-color: #f5f5f5;
+            }
+
+            /* Side Navbar */
+            .sidebar {
+                width: 250px;
+                height: 100vh;
+                background-color: #2c3e50;
+                color: white;
+                position: fixed;
+                padding: 20px 0;
+                transition: all 0.3s ease;
+                z-index: 1000;
+            }
+
+            .sidebar.collapsed {
+                width: 70px;
+            }
+
+            .toggle-btn {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: #34495e;
+                color: white;
+                border: none;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+            }
+
+            .sidebar .profile {
+                text-align: center;
+                padding: 20px 0;
+                border-bottom: 1px solid #4a6278;
+                transition: all 0.3s ease;
+            }
+
+            .sidebar .profile img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 3px solid #fff;
+                transition: all 0.3s ease;
+            }
+
+            .sidebar.collapsed .profile img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .sidebar .profile h2 {
+                margin-top: 10px;
+                font-size: 1.2rem;
+                transition: opacity 0.3s ease;
+            }
+
+            .sidebar .profile p {
+                font-size: 0.8rem;
+                color: #ecf0f1;
+                margin-top: 5px;
+                transition: opacity 0.3s ease;
+            }
+
+            .sidebar.collapsed .profile h2,
+            .sidebar.collapsed .profile p {
+                opacity: 0;
+                height: 0;
+                margin: 0;
+                padding: 0;
+            }
+
+            .sidebar .nav-links {
+                padding: 20px 0;
+            }
+
+            .sidebar .nav-links ul {
+                list-style: none;
+            }
+
+            .sidebar .nav-links ul li {
+                padding: 10px 20px;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+            }
+
+            .sidebar .nav-links ul li:hover {
+                background-color: #34495e;
+                cursor: pointer;
+            }
+
+            .sidebar .nav-links ul li i {
+                margin-right: 15px;
+                font-size: 18px;
+                min-width: 20px;
+                text-align: center;
+            }
+
+            .sidebar.collapsed .nav-links ul li span {
+                opacity: 0;
+                display: none;
+            }
+
+            .sidebar .nav-links ul li a {
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                font-size: 1rem;
+                width: 100%;
+            }
+
+            .sidebar .social-links {
+                position: absolute;
+                bottom: 20px;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                transition: all 0.3s ease;
+            }
+
+            .sidebar .contact-links {
+                position: absolute;
+                bottom: 80px;
+                width: 100%;
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            }
+
+            .sidebar .social-links a {
+                color: white;
+                font-size: 22px;
+                transition: all 0.3s ease;
+            }
+
+            .sidebar .social-links a:hover {
+                color: #3498db;
+            }
+
+            .sidebar.collapsed .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* Main Content */
+            .main-content {
+                margin-left: 250px;
+                width: calc(100% - 250px);
+                padding: 20px;
+                transition: all 0.3s ease;
+            }
+
+            .main-content.expanded {
+                margin-left: 70px;
+                width: calc(100% - 70px);
+            }
+
+            section {
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                padding: 30px;
+                margin-bottom: 30px;
+            }
+
+            h1.section-title {
+                font-size: 2rem;
+                margin-bottom: 20px;
+                color: #2c3e50;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+
+            /* Welcome Section */
+            #welcome {
+                display: flex;
+                align-items: center;
+                background: linear-gradient(135deg, #3498db, #2c3e50);
+                color: white;
+            }
+
+            #welcome .content {
+                flex: 2;
+                padding-right: 40px;
+            }
+
+            #welcome .image {
+                flex: 1;
+                text-align: center;
+            }
+
+            #welcome .image img {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 5px solid white;
+            }
+
+            #welcome h1 {
+                font-size: 3rem;
+                margin-bottom: 15px;
+                border-bottom: none;
+            }
+
+            #welcome p {
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+
+            /* Skills Section */
+            .skills-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .skill-category {
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .skill-category h3 {
+                background-color: #3498db;
+                color: white;
+                padding: 10px 15px;
+                margin: 0;
+            }
+
+            .skill-items {
+                padding: 15px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .skill-item {
+                display: flex;
+                align-items: center;
+                background-color: #f5f5f5;
+                padding: 5px 10px;
+                border-radius: 5px;
+                margin-bottom: 5px;
+                flex: 1 0 100px;
+            }
+
+            .skill-item img {
+                width: 50px;
+                height: 50px;
+                margin-right: 10px;
+            }
+
+            /* Projects Section */
+            .projects-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+            }
+
+            .project-card {
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                overflow: hidden;
+                transition: transform 0.3s ease;
+            }
+
+            .project-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .project-card img {
+                width: 100%;
+                height: 220px;
+                object-fit: cover;
+            }
+
+            .project-info {
+                padding: 15px;
+            }
+
+            .project-info h3 {
+                margin-bottom: 10px;
+                color: #2c3e50;
+            }
+
+            .project-info p {
+                color: #7f8c8d;
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .tech-stack {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+                margin-top: 10px;
+            }
+
+            .tech-tag {
+                background-color: #ecf0f1;
+                color: #2c3e50;
+                padding: 3px 8px;
+                border-radius: 3px;
+                font-size: 0.8rem;
+            }
+
+            /* Certifications Section */
+            .certifications-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .certification-card {
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .certification-card img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+            }
+
+            .certification-info {
+                padding: 15px;
+            }
+
+            .certification-info h3 {
+                font-size: 1rem;
+                margin-bottom: 5px;
+                color: #2c3e50;
+            }
+
+            .certification-info p {
+                color: #7f8c8d;
+                font-size: 0.9rem;
+            }
+
+            /* Experience Section */
+            .experience-item {
+                border-left: 3px solid #3498db;
+                padding-left: 20px;
+                margin-bottom: 30px;
+                position: relative;
+            }
+
+            .experience-item:before {
+                content: "";
+                position: absolute;
+                width: 15px;
+                height: 15px;
+                border-radius: 50%;
+                background-color: #3498db;
+                left: -9px;
+                top: 0;
+            }
+
+            .experience-item h3 {
+                color: #2c3e50;
+                margin-bottom: 5px;
+            }
+
+            .experience-item .company {
+                font-weight: bold;
+                color: #3498db;
+            }
+
+            .experience-item .period {
+                color: #7f8c8d;
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .experience-content {
+                display: flex;
+                gap: 20px;
+            }
+
+            .experience-description {
+                flex: 2;
+            }
+
+            .experience-image {
+                flex: 1;
+                max-width: 200px;
+            }
+
+            .experience-image img {
+                width: 100%;
+                border-radius: 5px;
+            }
+
+            /* Competitions Section */
+            .competitions-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+            }
+
+            .competition-card {
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                overflow: hidden;
+                padding: 15px;
+            }
+
+            .competition-card h3 {
+                color: #2c3e50;
+                margin-bottom: 10px;
+            }
+
+            .competition-card p {
+                color: #7f8c8d;
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .competition-card img {
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+
+            .dbtn {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: white;
+                color: #3498db;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            /* Footer */
+            footer {
+                text-align: center;
+                padding: 20px;
+                background-color: #2c3e50;
+                color: white;
+                margin-top: 50px;
+                border-radius: 10px;
+            }
+
+            @media (max-width: 768px) {
+                body {
+                    flex-direction: column;
+                }
+
+                .sidebar {
+                    width: 100%;
+                    height: auto;
+                    position: relative;
+                    padding-bottom: 60px;
+                }
+
+                .sidebar.collapsed {
+                    width: 100%;
+                    height: 60px;
+                    overflow: hidden;
+                }
+
+                .toggle-btn {
+                    top: 15px;
+                    right: 15px;
+                }
+
+                .main-content,
+                .main-content.expanded {
+                    margin-left: 0;
+                    width: 100%;
+                }
+
+                #welcome {
+                    flex-direction: column;
+                }
+
+                #welcome .content {
+                    padding-right: 0;
+                    margin-bottom: 20px;
+                }
+
+                .experience-content {
+                    flex-direction: column;
+                }
+
+                .experience-image {
+                    max-width: 100%;
+                }
+
+                .sidebar .social-links {
+                    position: relative;
+                    padding-top: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Side Navbar -->
+        <div class="sidebar" id="sidebar">
+            <button class="toggle-btn" id="toggleBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="profile">
+                <img src="pics/avatar1.png" alt="Profile Picture" />
+                <h2>Kaushik Shinde</h2>
+                <p>Data Analyst</p>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <li>
+                        <a href="#welcome"
+                            ><i class="fas fa-home"></i><span>Welcome</span></a
+                        >
+                    </li>
+                    <li>
+                        <a href="#skills"
+                            ><i class="fas fa-code"></i
+                            ><span>Skills & Technologies</span></a
+                        >
+                    </li>
+                    <li>
+                        <a href="#projects"
+                            ><i class="fas fa-project-diagram"></i
+                            ><span>Projects</span></a
+                        >
+                    </li>
+                    <li>
+                        <a href="#certifications"
+                            ><i class="fas fa-certificate"></i
+                            ><span>Certifications</span></a
+                        >
+                    </li>
+                    <li>
+                        <a href="#experience"
+                            ><i class="fas fa-briefcase"></i
+                            ><span>Training</span></a
+                        >
+                    </li>
+                    <li>
+                        <a href="#competitions"
+                            ><i class="fas fa-trophy"></i
+                            ><span>Competitions</span></a
+                        >
+                    </li>
+                    <li>
+                        <a href="#contact"
+                            ><i class="fas fa-envelope"></i
+                            ><span>Contact</span></a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <div class="social-links">
+                <a href="mailto:shindekaushik88@gmail.com" target="_blank"
+                    ><i class="fas fa-envelope"></i
+                ></a>
+                <a href="tel:+91-8688032843" target="_blank"
+                    ><i class="fas fa-phone"></i
+                ></a>
+                <a href="https://www.linkedin.com/in/kaushik-shinde/" target="_blank"
+                    ><i class="fab fa-linkedin"></i
+                ></a>
+                <a href="https://github.com/KaushikShinde08" target="_blank"
+                    ><i class="fab fa-github"></i
+                ></a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Welcome Section -->
+            <section id="welcome">
+                <div class="content">
+                    <h1>Hi, I'm Kaushik Shinde</h1>
+                    <p>
+                        I’m a B.Tech Computer Science student with a strong interest 
+                        in Data Analysis and Visualization. I specialize in transforming 
+                        raw data into actionable insights using tools like Power BI, 
+                        Tableau, Excel, and SQL.
+                    </p>
+                    <p>
+                        I’m passionate about uncovering trends, building interactive 
+                        dashboards, and applying statistical techniques to support 
+                        data-driven decision-making. I continuously strive to expand 
+                        my skills in data analytics, DAX functions, and storytelling 
+                        with data.
+                    </p>
+                    <a class="dbtn" href="logos/cv.pdf"> Download CV </a>
+                </div>
+                <div class="image">
+                    <img src="pics/avatar1.png" alt="Kaushik Shinde" />
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills">
+                <h1 class="section-title">Skills & Technologies</h1>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3>Languages</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <img src="logos/python.svg" alt="Python" />
+                                <span>Python</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="logos/java.svg" alt="java" />
+                                <span>Java</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="logos/c++.svg" alt="c++" />
+                                <span>C++</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Backend Development</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <img src="logos/flask.svg" alt="Node.js" />
+                                <span>Flask</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="logos/fastapi.svg" alt="Node.js" />
+                                <span>FastAPI</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="logos/html.svg" alt="html" />
+                                <span>HTML</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="logos/css.svg" alt="css" />
+                                <span>CSS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Data Science</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <img src="logos/excel.png" alt="excel" />
+                                <span>Excel</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="logos/tableau.svg" alt="tableau"/>
+                                <span>Tableau</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="logos/powerBI.png" alt="powerbi"/>
+                                <span>Power BI</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Databases</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <img src="logos/sql.svg" alt="MySQL" />
+                                <span>MySQL</span>
+                            </div>
+                            <!-- <div class="skill-item">
+                                <img
+                                    src="logos/postgresql.svg"
+                                    alt="PostgreSQL"
+                                />
+                                <span>PostgreSQL</span>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects">
+                <h1 class="section-title">Projects</h1>
+                <div class="projects-container">
+                    <div class="project-card">
+                        <img src="pics/crime.png" alt="crime" />
+                        <div class="project-info">
+                            <a
+                                href="https://github.com/KaushikShinde08/Crime_Data_Analysis-Dashboard"
+                                target="_blank"
+                            >
+                                <h3>Crime Analysis Dashboard</h3>
+                            </a>
+                            <p>
+                                Created an interactive Power BI dashboard to 
+                                analyze crime data across Indian cities, using 
+                                DAX and Power Query for data transformation. 
+                                Included category-wise insights, gender-based 
+                                analysis, geospatial mapping, and dynamic filters 
+                                for impactful data storytelling.
+                            </p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Excel</span>
+                                <span class="tech-tag">PowerBI</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <img src="pics/docufind.png" alt="AI Project" />
+                        <div class="project-info">
+                            <a
+                                href="https://github.com/n45dev/docufind-api"
+                                target="_blank"
+                            >
+                                <h3>DocuFind-API</h3>
+                            </a>
+                            <p>
+                                Developed a RESTful API using Python and Flask,
+                                enabling efficient identification of personal
+                                data in documents. – Containerized the
+                                application with Docker for seamless
+                                distribution and deployment. Utilized Cloudflare
+                                Tunnels to securely expose the API to the
+                                public, ensuring reliable access.
+                            </p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Flask</span>
+                                <span class="tech-tag">MongoDB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <img src="pics/salaries.jpeg" alt="Dashboard" />
+                        <div class="project-info">
+                            <a
+                                href="https://github.com/n45dev/easyserve"
+                                target="_blank"
+                            >
+                                <h3>Data Science Salaries Dashboard</h3>
+                            </a>
+                            <p>
+                                Built an interactive dashboard in Tableau to visualize
+                                Data Science salary trends across roles, experience levels,
+                                and locations. Used filters, charts, and KPIs to highlight 
+                                key insights such as average salary by job title, employment 
+                                type, and company size for better career decision-making.
+                            </p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Excel</span>
+                                <span class="tech-tag">Tableau</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Certifications Section -->
+            <section id="certifications">
+                <h1 class="section-title">Certifications & Courses</h1>
+                <div class="certifications-container">
+                    <div class="certification-card">
+                        <img
+                            src="pics/gfg.png"
+                            alt="gfg"
+                        />
+                        <div class="certification-info">
+                            <h3>Complete Machine Learning & Data Science Program</h3>
+                            <p>GeeksforGeeks</p>
+                        </div>
+                    </div>
+
+                    <div class="certification-card">
+                        <img src="pics/tableaucoursera.png" alt="coursera Certificate" />
+                        <div class="certification-info">
+                            <h3>
+                                Data Analysis with Tableau
+                            </h3>
+                            <p>Coursera</p>
+                        </div>
+                    </div>
+
+                    <div class="certification-card">
+                        <img src="pics/DSA.png" alt="udemy Certificate" />
+                        <div class="certification-info">
+                            <h3>Mastering Data Structures & Algorithms</h3>
+                            <p>Udemy</p>
+                        </div>
+                    </div>
+
+                    <div class="certification-card">
+                        <img src="pics/python.png" alt="udemy Certificate" />
+                        <div class="certification-info">
+                            <h3>Complete Python Developer</h3>
+                            <p>Udemy</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience">
+                <h1 class="section-title">Training</h1>
+
+                <div class="experience-item">
+                    <h3>Complete Machine Learning & Data Science Program</h3>
+                    <div class="company">
+                        GeeksforGeeks.org
+                    </div>
+                    <div class="period">June 2024 - August 2024</div>
+                    <div class="experience-content">
+                        <div class="experience-description">
+                            <ul>
+                                <li>
+                                    Gained hands-on experience in machine learning algorithms,
+                                    model evaluation, and data preprocessing.
+                                </li>
+                                <li>
+                                    Developed expertise in supervised and unsupervised learning
+                                    including regression, classification, and clustering techniques.
+                                </li>
+                                <li>
+                                    Implemented data analysis techniques to 
+                                    support decision-making within the internship.
+                                </li>
+                                <li>
+                                    Evaluated model performance using metrics such 
+                                    as accuracy and precision to ensure reliable results.
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- <div class="experience-image">
+                            <img src="nucon.jpg" alt="Optmyzr" />
+                        </div> -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Competitions Section -->
+            <section id="competitions">
+                <h1 class="section-title">
+                    Competitions, Hackathons, & Achievements
+                </h1>
+                <div class="competitions-container">
+                    <!-- <div class="competition-card">
+                        <h3>One among Dean's top 10% students at University</h3>
+                        <p>
+                            For good academic performance and extra-curricular
+                            activities at University.
+                        </p>
+                        <img src="top10.png" alt="Dean's List" />
+                    </div> -->
+
+                    <div class="competition-card">
+                        <h3>Selected as part of a top 10 teams</h3>
+                        <p>In Smart India Hackathon at University Level.</p>
+                        <img src="pics/SIH.png" alt="Hackathon" />
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact">
+                <h1 class="section-title">Contact</h1>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap">
+                    <div style="flex: 1; min-width: 300px">
+                        <h3>Get In Touch</h3>
+                        <p style="margin: 15px 0">
+                            Feel free to reach out to me for collaborations, job
+                            opportunities, or just to say hello!
+                        </p>
+                        <div style="margin-bottom: 10px">
+                            <strong>Email:</strong> shindekaushik88@gmail.com
+                        </div>
+                        <div style="margin-bottom: 10px">
+                            <strong>Phone:</strong> +91 8688032843
+                        </div>
+                        <div>
+                            <strong>Location:</strong> Lovely Professional
+                            University, Punjab, India
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px">
+                        <form
+                            style="
+                                display: flex;
+                                flex-direction: column;
+                                gap: 10px;
+                            "
+                        >
+                            <input
+                                type="text"
+                                placeholder="Your Name"
+                                style="
+                                    padding: 10px;
+                                    border-radius: 5px;
+                                    border: 1px solid #ddd;
+                                "
+                            />
+                            <input
+                                type="email"
+                                placeholder="Your Email"
+                                style="
+                                    padding: 10px;
+                                    border-radius: 5px;
+                                    border: 1px solid #ddd;
+                                "
+                            />
+                            <textarea
+                                placeholder="Your Message"
+                                rows="5"
+                                style="
+                                    padding: 10px;
+                                    border-radius: 5px;
+                                    border: 1px solid #ddd;
+                                "
+                            ></textarea>
+                            <button
+                                type="submit"
+                                style="
+                                    padding: 10px;
+                                    border-radius: 5px;
+                                    background-color: #3498db;
+                                    color: white;
+                                    border: none;
+                                    cursor: pointer;
+                                "
+                            >
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <p>&copy; 2025 Kaushik Shinde. All Rights Reserved.</p>
+            </footer>
+        </div>
+
+        <script>
+            // Toggle sidebar
+            const sidebar = document.getElementById("sidebar");
+            const mainContent = document.getElementById("mainContent");
+            const toggleBtn = document.getElementById("toggleBtn");
+
+            toggleBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("collapsed");
+                mainContent.classList.toggle("expanded");
+
+                // Change icon based on sidebar state
+                if (sidebar.classList.contains("collapsed")) {
+                    toggleBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                } else {
+                    toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll(".nav-links a").forEach((anchor) => {
+                anchor.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute("href");
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 20,
+                            behavior: "smooth",
+                        });
+
+                        // On mobile, collapse the sidebar after clicking a link
+                        if (window.innerWidth <= 768) {
+                            sidebar.classList.add("collapsed");
+                            mainContent.classList.add("expanded");
+                            toggleBtn.innerHTML =
+                                '<i class="fas fa-expand"></i>';
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
